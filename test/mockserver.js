@@ -53,7 +53,7 @@ describe('mockserver', function() {
             process('/not-there', 'GET');
 
             assert.equal(res.status, 404);
-            assert.equal(res.body, 'Not Mocked');
+            assert.equal(res.body, 'Not Mocked: test/mocks/not-there/GET.mock');
         });
         it('should be able to handle trailing slashes without changing the name of the mockfile', function() {
             process('/test/', 'GET');
@@ -128,7 +128,7 @@ describe('mockserver', function() {
             req.headers['Authorization'] = 'invalid';
             process('/request-headers', 'POST');
             assert.equal(res.status, 404);
-            assert.equal(res.body, 'Not Mocked');
+            assert.equal(res.body, 'Not Mocked: test/mocks/request-headers/POST_Authorization=invalid.mock');
         });
         it('should look for alternate combinations of headers if a custom header is not found', function() {
             mockserver.headers = ['Authorization', 'X-Foo'];

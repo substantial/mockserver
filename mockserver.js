@@ -161,7 +161,7 @@ var mockserver = {
             return res.end(mock.body);
         } else {
             res.writeHead(404);
-            res.end('Not Mocked');
+            res.end('Not Mocked: '+mockFile);
         }
       });
     }
