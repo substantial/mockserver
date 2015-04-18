@@ -76,35 +76,29 @@ function getBodyOrQueryString(body, query) {
   return body;
 }
 
-/**
- * Ghetto way to get the body
- * out of the request.
- * 
- * There are definitely better
- * ways to do this (ie. npm/body
- * or npm/body-parser) but for
- * the time being this does it's work
- * (ie. we don't need to support
- * fancy body parsing in mockserver
- * for now).
- */
-function getBody(req) {
-  var body = '';
-  
-  req.on('data', function(b){
-    body = body + b.toString()
-  });
-  
-  return body;
-}
-
 var mockserver = {
     directory:       ".",
     use:             function(directory) {
         this.directory = directory;
     },
     handle:          function(req, res) {
-      body = getBody(req);
+      
+      /**
+        * Ghetto way to get the body
+        * out of the request.
+        * 
+        * There are definitely better
+        * ways to do this (ie. npm/body
+        * or npm/body-parser) but for
+        * the time being this does it's work
+        * (ie. we don't need to support
+        * fancy body parsing in mockserver
+        * for now).
+      */
+      var body = '';
+      req.on('data', function(b){
+        body = body + b.toString()
+      });
       
       req.on('end', function(){
         var url = req.url;
